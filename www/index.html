@@ -148,8 +148,7 @@ auth.onAuthStateChanged(user => {
   const status = document.getElementById('authStatus');
   if (status && user) status.textContent = 'लॉगिन: ' + user.email;
 });
-\n</script>
-<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
+
 \n<script>
 function page(id){document.querySelectorAll('section').forEach(s=>s.style.display='none');document.getElementById(id).style.display='block';window.scrollTo(0,0)}
 document.getElementById('seats').innerHTML=Array.from({length:8},(_,i)=>'<div class="seat" onclick="toast(\'सीट '+(i+1)+' अभी डेमो है।\')"> '+(i===0?'👑':'💺')+'<small>Seat '+(i+1)+'</small></div>').join('');
