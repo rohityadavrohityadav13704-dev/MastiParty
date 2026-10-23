@@ -68,7 +68,18 @@ section{display:none}
 
 <section id="profile"><h2>👤 My Profile</h2><div class="room" style="text-align:center"><div style="font-size:70px">🙂</div><h3>Masti Party User</h3><p>Guest Account · Demo</p><button onclick="toast('रजिस्ट्रेशन और सुरक्षित लॉगिन अभी सेट करना बाकी है।')">लॉगिन / रजिस्टर</button><button onclick="toast('सेटिंग्स जल्द जोड़ी जाएँगी।')">⚙️ Settings</button></div></section>
 
+
+<section id="gifts" style="display:none">
+<h2>🎁 Gift Gallery</h2>
+<div class="room"><p>Demo Coins: <b id="giftBalance">0</b></p>
+<p>दोस्त के लिए गिफ्ट चुनें।</p></div>
+<div class="grid" id="giftGrid"></div>
+<div class="room"><h3>🎉 Gift History</h3><div id="giftHistory">अभी कोई गिफ्ट नहीं।</div></div>
+<p>यह डेमो है। असली भुगतान और पैसे निकालने की सुविधा अभी उपलब्ध नहीं है।</p>
+</section>
+
 <div class="bottom">
+<div class="nav" onclick="page('gifts')"><span>🎁</span>Gifts</div>
 <div class="nav" onclick="page('home')"><span>🏠</span>Home</div>
 <div class="nav" onclick="page('chat')"><span>💬</span>Chat</div>
 <div class="nav" onclick="page('party')"><span>🎉</span>Party</div>
@@ -80,6 +91,50 @@ section{display:none}
 function page(id){document.querySelectorAll('section').forEach(s=>s.style.display='none');document.getElementById(id).style.display='block';window.scrollTo(0,0)}
 document.getElementById('seats').innerHTML=Array.from({length:8},(_,i)=>'<div class="seat" onclick="toast(\'सीट '+(i+1)+' अभी डेमो है।\')"> '+(i===0?'👑':'💺')+'<small>Seat '+(i+1)+'</small></div>').join('');
 function toast(t){let e=document.getElementById('toast');e.textContent=t;e.style.display='block';clearTimeout(window.tt);window.tt=setTimeout(()=>e.style.display='none',2800)}
+
+const giftItems = [
+ ['🌹','गुलाब',10],['❤️','दिल',20],['🧸','टेडी',50],
+ ['💐','फूलों का गुलदस्ता',100],['🎂','केक',200],
+ ['💎','डायमंड',500],['👑','क्राउन',1000],
+ ['🚗','लग्जरी कार',5000],['🚀','रॉकेट',10000]
+];
+let giftCoins = Number(localStorage.getItem('mastiparty_demo_coins') || 0);
+let giftLog = JSON.parse(localStorage.getItem('mastiparty_gift_log') || '[]');
+
+function renderGifts() {
+ const grid = document.getElementById('giftGrid');
+ if (!grid) return;
+ document.getElementById('giftBalance').textContent = giftCoins;
+ grid.innerHTML = giftItems.map((g,i) =>
+ `<div class="room" style="text-align:center"><div style="font-size:40px">${g[0]}</div><b>${g[1]}</b><p>🪙 ${g[2]} कॉइन</p><button onclick="sendDemoGift(${i})">🎁 भेजें</button></div>`
+ ).join('');
+ document.getElementById('giftHistory').innerHTML = giftLog.length
+ ? giftLog.slice().reverse().map(x => `<p>${x}</p>`).join('')
+ : 'अभी कोई गिफ्ट नहीं।';
+}
+
+function sendDemoGift(i) {
+ const g = giftItems[i];
+ if (giftCoins < g[2]) {
+   toast('डेमो कॉइन कम हैं। असली खरीदारी अभी चालू नहीं है।');
+   return;
+ }
+ giftCoins -= g[2];
+ localStorage.setItem('mastiparty_demo_coins', String(giftCoins));
+ giftLog.push(`${g[0]} ${g[1]} · ${g[2]} कॉइन`);
+ giftLog = giftLog.slice(-20);
+ localStorage.setItem('mastiparty_gift_log', JSON.stringify(giftLog));
+ renderGifts();
+ toast('डेमो गिफ्ट भेज दिया!');
+}
+
+const previousPage = page;
+page = function(id) {
+ previousPage(id);
+ if (id === 'gifts') renderGifts();
+};
+renderGifts();
+
 </script>
 </body>
 </html>

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<meta name="theme-color" content="#171126">
+<title>Masti Party</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#100d19;color:white;font-family:Arial,sans-serif;padding-bottom:85px}
+header{padding:20px 17px;background:linear-gradient(135deg,#7c35ed,#ec3b91);border-radius:0 0 25px 25px}
+.top{display:flex;justify-content:space-between;align-items:center}
+.logo{font-size:25px;font-weight:900}
+.wallet{background:#24172e;padding:10px 13px;border-radius:20px;font-size:13px}
+h2{font-size:20px;margin:22px 16px 12px}
+p{color:#bcb4ce}
+.search{margin:17px 16px;background:#211a2d;padding:13px;border-radius:14px;color:#aaa}
+.tabs{display:flex;gap:9px;margin:15px 16px;overflow:auto}
+.tab{white-space:nowrap;background:#241d32;padding:11px 17px;border-radius:22px;font-size:13px}
+.active{background:#a84aff}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:13px;padding:0 15px}
+.card{background:#211a2d;border-radius:18px;overflow:hidden;padding-bottom:13px}
+.avatar{height:130px;display:flex;align-items:center;justify-content:center;font-size:62px;background:linear-gradient(140deg,#4e2878,#d94b91)}
+.info{padding:11px;font-size:14px}
+.online{color:#53edaa;font-size:11px;margin-top:7px}
+button{border:0;border-radius:12px;background:#a84aff;color:white;padding:10px;width:100%;font-weight:bold;margin-top:10px}
+.room{margin:0 15px 12px;padding:17px;background:#211a2d;border-radius:17px}
+.seats{display:grid;grid-template-columns:repeat(4,1fr);gap:9px;margin-top:15px}
+.seat{background:#352541;border-radius:13px;text-align:center;padding:12px 2px;font-size:24px}
+.seat small{display:block;font-size:10px;color:#c7b8d8;margin-top:5px}
+.bottom{position:fixed;bottom:0;left:0;right:0;background:#1b1526;display:flex;justify-content:space-around;padding:12px 3px calc(12px + env(safe-area-inset-bottom));border-top:1px solid #382744}
+.nav{text-align:center;font-size:11px;color:#bcb1ce;cursor:pointer}
+.nav span{display:block;font-size:22px;margin-bottom:5px}
+section{display:none}
+#home{display:block}
+#toast{position:fixed;bottom:85px;left:10%;width:80%;background:#382744;padding:14px;border-radius:12px;text-align:center;display:none}
+</style>
+</head>
+<body>
+<header>
+<div class="top"><div class="logo">🎉 Masti Party</div><div class="wallet" onclick="page('wallet')">🪙 <b id="coins">0</b> Coins ＋</div></div>
+<h2 style="margin:22px 0 5px">आपकी पार्टी, आपकी दुनिया ❤️</h2>
+<div style="font-size:13px">Chat · Video Call · Live Party</div>
+</header>
+
+<section id="home">
+<div class="search">🔍 &nbsp; नाम या प्रोफाइल खोजें</div>
+<div class="tabs"><div class="tab active">✨ For You</div><div class="tab">🟢 Online</div><div class="tab">❤️ Popular</div></div>
+<h2>💖 लोगों से मिलें</h2>
+<div class="grid">
+<div class="card"><div class="avatar">👩🏻</div><div class="info"><b>Priya</b><div class="online">● Demo Profile</div><button onclick="page('chat')">💬 Chat</button><button onclick="page('call')">📹 Video Call</button></div></div>
+<div class="card"><div class="avatar">👩🏽</div><div class="info"><b>Anjali</b><div class="online">● Demo Profile</div><button onclick="page('chat')">💬 Chat</button><button onclick="page('call')">📹 Video Call</button></div></div>
+<div class="card"><div class="avatar">👨🏻</div><div class="info"><b>Rahul</b><div class="online">● Demo Profile</div><button onclick="page('chat')">💬 Chat</button></div></div>
+<div class="card"><div class="avatar">👩🏼</div><div class="info"><b>Neha</b><div class="online">● Demo Profile</div><button onclick="page('chat')">💬 Chat</button></div></div>
+</div>
+<h2>🎉 Live Party Rooms</h2>
+<div class="room"><b>🔥 Friends Masti Room</b><p>🎙️ Audio Party · 8 Seats</p><button onclick="page('party')">पार्टी में जाएँ ➜</button></div>
+<div class="room"><b>🎶 Music & Chat</b><p>🎙️ Audio Party · 8 Seats</p><button onclick="page('party')">पार्टी में जाएँ ➜</button></div>
+</section>
+
+<section id="chat"><h2>💬 Chat</h2><div class="room">यह Chat का शुरुआती इंटरफेस है। असली ऑनलाइन मैसेजिंग के लिए सर्वर और यूज़र अकाउंट जोड़ने होंगे।</div><div class="room"><input id="msg" placeholder="मैसेज लिखें..." style="width:100%;padding:13px;border-radius:10px;border:0"><button onclick="toast('अभी डेमो है; ऑनलाइन चैट बाद में सर्वर से जुड़ेगी।')">भेजें ➤</button></div></section>
+
+<section id="call"><h2>📹 Video Call</h2><div class="room" style="text-align:center;padding:45px 20px"><div style="font-size:75px">📹</div><h3>Video Call</h3><p>असली कॉल के लिए सुरक्षित वीडियो सेवा और कैमरा अनुमति सेट करनी होगी।</p><button onclick="toast('वीडियो कॉल सेवा अभी कनेक्ट नहीं है।')">कॉल शुरू करें</button></div></section>
+
+<section id="party"><h2>🎉 Party Room</h2><div class="room"><h3>🔥 Friends Masti</h3><p>अपनी सीट चुनें · Demo Room</p><div class="seats" id="seats"></div><button onclick="toast('लाइव ऑडियो के लिए सर्वर और कॉल सेवा जोड़नी होगी।')">🎙️ माइक चालू करें</button></div></section>
+
+<section id="wallet"><h2>🪙 My Wallet</h2><div class="room"><p>आपका Demo Coin Balance</p><h1>🪙 <span id="balance">0</span></h1><p>पेमेंट अभी कनेक्ट नहीं है। नीचे के पैक केवल डिजाइन का उदाहरण हैं।</p></div><div class="grid"><div class="room">🪙 500 Coins<br><b>₹49</b><button onclick="toast('असली भुगतान अभी उपलब्ध नहीं है।')">पैक चुनें</button></div><div class="room">🪙 1100 Coins<br><b>₹99</b><button onclick="toast('असली भुगतान अभी उपलब्ध नहीं है।')">पैक चुनें</button></div><div class="room">🪙 2400 Coins<br><b>₹199</b><button onclick="toast('असली भुगतान अभी उपलब्ध नहीं है।')">पैक चुनें</button></div><div class="room">🪙 6500 Coins<br><b>₹499</b><button onclick="toast('असली भुगतान अभी उपलब्ध नहीं है।')">पैक चुनें</button></div></div></section>
+
+<section id="profile"><h2>👤 My Profile</h2><div class="room" style="text-align:center"><div style="font-size:70px">🙂</div><h3>Masti Party User</h3><p>Guest Account · Demo</p><button onclick="toast('रजिस्ट्रेशन और सुरक्षित लॉगिन अभी सेट करना बाकी है।')">लॉगिन / रजिस्टर</button><button onclick="toast('सेटिंग्स जल्द जोड़ी जाएँगी।')">⚙️ Settings</button></div></section>
+
+<div class="bottom">
+<div class="nav" onclick="page('home')"><span>🏠</span>Home</div>
+<div class="nav" onclick="page('chat')"><span>💬</span>Chat</div>
+<div class="nav" onclick="page('party')"><span>🎉</span>Party</div>
+<div class="nav" onclick="page('wallet')"><span>🪙</span>Wallet</div>
+<div class="nav" onclick="page('profile')"><span>👤</span>Profile</div>
+</div>
+<div id="toast"></div>
+<script>
+function page(id){document.querySelectorAll('section').forEach(s=>s.style.display='none');document.getElementById(id).style.display='block';window.scrollTo(0,0)}
+document.getElementById('seats').innerHTML=Array.from({length:8},(_,i)=>'<div class="seat" onclick="toast(\'सीट '+(i+1)+' अभी डेमो है।\')"> '+(i===0?'👑':'💺')+'<small>Seat '+(i+1)+'</small></div>').join('');
+function toast(t){let e=document.getElementById('toast');e.textContent=t;e.style.display='block';clearTimeout(window.tt);window.tt=setTimeout(()=>e.style.display='none',2800)}
+</script>
+</body>
+</html>
